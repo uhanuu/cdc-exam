@@ -1,0 +1,43 @@
+server:
+  port: 9292
+
+spring:
+  application:
+    name: cdc-exam
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://localhost:3306/cdc?useUnicode=true&serverTimezone=Asia/Seoul
+      username: root
+      password: 1234
+    url: jdbc:mysql://localhost:3306/cdc?useUnicode=true&serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    open-in-view: false
+  sql:
+    init:
+      mode: never
+
+logging:
+  level:
+    org:
+      springframework:
+        transaction: trace
+        orm:
+          jpa: debug
+        kafka: trace
+
+kafka:
+  topics:
+    payment:
+      confirmed: payment-confirm-event-v1
+
+kafka-consumer-config:
+  group-id: wallet-service-group16
